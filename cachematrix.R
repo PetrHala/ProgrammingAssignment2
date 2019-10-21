@@ -1,30 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Function makeCacheMatrix takes matrix x as an argument and creates an object that contains several functions
+## for further manipulation and storing cache of the matrix inverse
 
-## Function makeCacheMatrix takes an matrix as an argument and cre
+## Function cacheSolve takes an object x, which is produced by makeCacheMatrix, and returns the inverse of the matrix
+## stored in this object, either by reading the value stored in cache, or computing it 
 
-## Write a short comment describing this function
+
+## Takes a matrix and returns an enriched object for caching the inverse
 
 makeCacheMatrix <- function(x=matrix()){
-	inverse <- NULL
-  	setmatrix <- function(a){       # sets new matrix into the object, and erases old cached inverse
-    		x <<- a
-    		inverse <<- NULL
-  	}
-  	matrix <- function(){           # returns the matrix stored in the mkmatrix object
-    		x
-  	}
-  	setinv <- function(i){          # sets externally computed inverse into the mkmatrix object
-    		inverse <<- i
-  	}
-  	inv <- function(){              # returns cached inverse or default NULL
-    		inverse
-  	}
-  	list(setmatrix = setmatrix, matrix = matrix, setinv = setinv, inv = inv)
+        inverse <- NULL
+        setmatrix <- function(a){       # sets new matrix into the object, and erases old cached inverse
+                x <<- a
+                inverse <<- NULL
+        }
+        matrix <- function(){           # returns the matrix stored in the mkmatrix object
+                x
+        }
+        setinv <- function(i){          # sets externally computed inverse into the mkmatrix object
+                inverse <<- i
+        }
+        inv <- function(){              # returns cached inverse or default NULL
+                inverse
+        }
+        list(setmatrix = setmatrix, matrix = matrix, setinv = setinv, inv = inv)
 }
 
 
-## Write a short comment describing this function
+## Takes an makeCacheMatrix object and returns the inverse of matrix stored within it
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
@@ -32,11 +34,8 @@ cacheSolve <- function(x, ...) {
         if(!is.null(inv)){
                 message("getting cached inverse")
         } else {
-                inv <- solve(m$matrix())	# m$matrix() returns the matrix itself from the object created by mkmatrix
+                inv <- solve(x$matrix())	# m$matrix() returns the matrix itself from the object created by mkmatrix
                 x$setinv(inv)           	# sets an inverse within the object created by mkmatrix
         }
         inv                             	# returns inv, either as stored cache or newly computed via the else statement  
 }
-
-
-
