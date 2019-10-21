@@ -13,10 +13,10 @@ makeCacheMatrix <- function(x=matrix()){
                 x <<- a
                 inverse <<- NULL
         }
-        matrix <- function(){           # returns the matrix stored in the mkmatrix object
+        matrix <- function(){           # returns the matrix stored in the makeCacheMatrix object
                 x
         }
-        setinv <- function(i){          # sets externally computed inverse into the mkmatrix object
+        setinv <- function(i){          # sets externally computed inverse into the makeCacheMatrix object
                 inverse <<- i
         }
         inv <- function(){              # returns cached inverse or default NULL
@@ -34,8 +34,8 @@ cacheSolve <- function(x, ...) {
         if(!is.null(inv)){
                 message("getting cached inverse")
         } else {
-                inv <- solve(x$matrix())	# m$matrix() returns the matrix itself from the object created by mkmatrix
-                x$setinv(inv)           	# sets an inverse within the object created by mkmatrix
+                inv <- solve(x$matrix())	# x$matrix() returns the matrix itself from the object created by makeCacheMatrix
+                x$setinv(inv)           	# sets an inverse within the object x created by makeCacheMatrix
         }
         inv                             	# returns inv, either as stored cache or newly computed via the else statement  
 }
